@@ -774,12 +774,16 @@ export interface ApiAboutMeAboutMe extends Schema.SingleType {
     singularName: 'about-me';
     pluralName: 'about-mes';
     displayName: 'about-me';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     content: Attribute.Text;
+    name: Attribute.String;
+    title: Attribute.String;
+    bio: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -830,12 +834,48 @@ export interface ApiArticleArticle extends Schema.CollectionType {
   };
 }
 
+export interface ApiEducationEducation extends Schema.CollectionType {
+  collectionName: 'educations';
+  info: {
+    singularName: 'education';
+    pluralName: 'educations';
+    displayName: 'Education';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    school: Attribute.String;
+    course: Attribute.String;
+    where: Attribute.String;
+    start: Attribute.Date;
+    end: Attribute.Date;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::education.education',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::education.education',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiExperienceExperience extends Schema.CollectionType {
   collectionName: 'experiences';
   info: {
     singularName: 'experience';
     pluralName: 'experiences';
     displayName: 'Experience';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -846,6 +886,7 @@ export interface ApiExperienceExperience extends Schema.CollectionType {
     start: Attribute.Date;
     end: Attribute.Date;
     description: Attribute.Text;
+    where: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -950,6 +991,7 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::about-me.about-me': ApiAboutMeAboutMe;
       'api::article.article': ApiArticleArticle;
+      'api::education.education': ApiEducationEducation;
       'api::experience.experience': ApiExperienceExperience;
       'api::project.project': ApiProjectProject;
       'api::social.social': ApiSocialSocial;
